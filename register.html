@@ -396,124 +396,144 @@
         </form>
     </div>
 
-    <script>
-        // نمایش/مخفی کردن رمز عبور
-        document.getElementById('togglePassword').addEventListener('click', function() {
-            const passwordInput = document.getElementById('password');
-            const icon = this.querySelector('i');
-            
-            if (passwordInput.type === 'password') {
-                passwordInput.type = 'text';
-                icon.className = 'fas fa-eye-slash';
-            } else {
-                passwordInput.type = 'password';
-                icon.className = 'fas fa-eye';
-            }
-        });
-
-        document.getElementById('toggleConfirmPassword').addEventListener('click', function() {
-            const confirmInput = document.getElementById('confirm_password');
-            const icon = this.querySelector('i');
-            
-            if (confirmInput.type === 'password') {
-                confirmInput.type = 'text';
-                icon.className = 'fas fa-eye-slash';
-            } else {
-                confirmInput.type = 'password';
-                icon.className = 'fas fa-eye';
-            }
-        });
-
-        // نمایش قدرت رمز عبور
-        document.getElementById('password').addEventListener('input', function() {
-            const password = this.value;
-            const strengthBar = document.getElementById('strengthBar');
-            let strength = 0;
-            
-            if (password.length >= 8) strength += 30;
-            else if (password.length >= 6) strength += 20;
-            else strength += 10;
-            
-            if (/[a-z]/.test(password)) strength += 20;
-            if (/[A-Z]/.test(password)) strength += 20;
-            if (/[0-9]/.test(password)) strength += 15;
-            if (/[^a-zA-Z0-9]/.test(password)) strength += 15;
-            
-            strength = Math.min(strength, 100);
-            strengthBar.style.width = strength + '%';
-            
-            if (strength < 30) {
-                strengthBar.style.background = '#ff4444';
-            } else if (strength < 60) {
-                strengthBar.style.background = '#ffbb33';
-            } else {
-                strengthBar.style.background = '#00C851';
-            }
-            
-            checkPasswordMatch();
-        });
-
-        // بررسی تطابق رمز
-        document.getElementById('confirm_password').addEventListener('input', checkPasswordMatch);
-
-        function checkPasswordMatch() {
-            const password = document.getElementById('password').value;
-            const confirm = document.getElementById('confirm_password').value;
-            const matchDiv = document.getElementById('passwordMatch');
-            
-            if (confirm.length > 0) {
-                if (password === confirm) {
-                    matchDiv.className = 'password-match match';
-                    matchDiv.innerHTML = '<i class="fas fa-check-circle"></i> رمز عبور مطابقت دارد';
-                } else {
-                    matchDiv.className = 'password-match not-match';
-                    matchDiv.innerHTML = '<i class="fas fa-times-circle"></i> رمز عبور مطابقت ندارد';
-                }
-            } else {
-                matchDiv.innerHTML = '';
-            }
+   <script>
+    // ===== سیستم ثبت‌نام و ورود با localStorage =====
+    
+    // نمایش/مخفی کردن رمز عبور
+    document.getElementById('togglePassword').addEventListener('click', function() {
+        const passwordInput = document.getElementById('password');
+        const eyeIcon = document.getElementById('eyeIcon');
+        
+        if (passwordInput.type === 'password') {
+            passwordInput.type = 'text';
+            eyeIcon.className = 'fas fa-eye-slash';
+        } else {
+            passwordInput.type = 'password';
+            eyeIcon.className = 'fas fa-eye';
         }
+    });
 
-        // ارسال فرم
+    // تابع برای ثبت‌نام کاربر جدید
+    function registerUser(username, password) {
+        // گرفتن لیست کاربران از localStorage
+        let users = JSON.parse(localStorage.getItem('users')) || [];
+        
+        // بررسی کن که کاربر قبلاً ثبت‌نام نکرده باشه
+        const userExists = users.some(user => user.username === username);
+        
+        if (userExists) {
+            return { success: false, message: 'این نام کاربری قبلاً ثبت‌نام کرده!' };
+        }
+        
+        // اضافه کردن کاربر جدید
+        users.push({ username, password });
+        localStorage.setItem('users', JSON.stringify(users));
+        return { success: true, message: 'ثبت‌نام با موفقیت انجام شد!' };
+    }
+
+    // تابع برای ورود کاربر
+    function loginUser(username, password) {
+        let users = JSON.parse(localStorage.getItem('users')) || [];
+        
+        // اگه هیچ کاربری ثبت‌نام نکرده، یه کاربر پیش‌فرض بساز
+        if (users.length === 0) {
+            users = [
+                { username: 'ali88zare', password: '123456' },
+                { username: 'admin', password: 'admin123' }
+            ];
+            localStorage.setItem('users', JSON.stringify(users));
+        }
+        
+        // بررسی کن کاربر وجود داره
+        const user = users.find(user => user.username === username && user.password === password);
+        
+        if (user) {
+            return { success: true, message: 'ورود موفق!' };
+        } else {
+            return { success: false, message: 'نام کاربری یا رمز عبور اشتباه است!' };
+        }
+    }
+
+    // مدیریت فرم ورود
+    document.getElementById('loginForm').addEventListener('submit', function(e) {
+        e.preventDefault();
+        
+        const username = document.getElementById('username').value;
+        const password = document.getElementById('password').value;
+        const messageDiv = document.getElementById('message');
+        
+        // بررسی کن فیلدها خالی نباشن
+        if (username.trim() === '' || password.trim() === '') {
+            messageDiv.className = 'message error';
+            messageDiv.innerHTML = '<i class="fas fa-exclamation-circle"></i> لطفاً نام کاربری و رمز عبور را وارد کنید';
+            messageDiv.style.display = 'flex';
+            return;
+        }
+        
+        // تلاش برای ورود
+        const result = loginUser(username, password);
+        
+        if (result.success) {
+            messageDiv.className = 'message success';
+            messageDiv.innerHTML = '<i class="fas fa-check-circle"></i> ' + result.message + ' در حال انتقال...';
+            messageDiv.style.display = 'flex';
+            
+            // ذخیره کن که کاربر وارد شده
+            localStorage.setItem('currentUser', username);
+            
+            // بعد از 1 ثانیه برو به سایت شخصی
+            setTimeout(function() {
+                window.location.href = 'https://your-personal-site.com'; // آدرس سایت خودتو بذار
+            }, 1000);
+        } else {
+            messageDiv.className = 'message error';
+            messageDiv.innerHTML = '<i class="fas fa-exclamation-circle"></i> ' + result.message;
+            messageDiv.style.display = 'flex';
+        }
+    });
+
+    // صفحه ثبت‌نام (اگه داری)
+    if (document.getElementById('registerForm')) {
         document.getElementById('registerForm').addEventListener('submit', function(e) {
             e.preventDefault();
             
-            // بررسی تطابق رمز
-            const password = document.getElementById('password').value;
-            const confirm = document.getElementById('confirm_password').value;
+            const username = document.getElementById('regUsername').value;
+            const password = document.getElementById('regPassword').value;
+            const confirmPassword = document.getElementById('confirmPassword').value;
+            const messageDiv = document.getElementById('regMessage');
             
-            if (password !== confirm) {
-                showMessage('error', 'رمز عبور و تکرار آن مطابقت ندارند!');
+            // اعتبارسنجی
+            if (password !== confirmPassword) {
+                messageDiv.className = 'message error';
+                messageDiv.innerHTML = '<i class="fas fa-exclamation-circle"></i> رمز عبور مطابقت ندارد!';
+                messageDiv.style.display = 'flex';
                 return;
             }
             
-            // بررسی تیک قوانین
-            if (!document.getElementById('terms').checked) {
-                showMessage('error', 'برای ثبت نام باید قوانین را بپذیرید');
-                return;
+            const result = registerUser(username, password);
+            
+            if (result.success) {
+                messageDiv.className = 'message success';
+                messageDiv.innerHTML = '<i class="fas fa-check-circle"></i> ' + result.message + ' در حال انتقال به صفحه ورود...';
+                messageDiv.style.display = 'flex';
+                
+                setTimeout(function() {
+                    window.location.href = 'index.html';
+                }, 1500);
+            } else {
+                messageDiv.className = 'message error';
+                messageDiv.innerHTML = '<i class="fas fa-exclamation-circle"></i> ' + result.message;
+                messageDiv.style.display = 'flex';
             }
-            
-            // نمایش پیام موفقیت
-            showMessage('success', 'ثبت نام با موفقیت انجام شد! به صفحه ورود هدایت می‌شوید...');
-            
-            // رفتن به صفحه لاگین بعد از ۲ ثانیه
-            setTimeout(() => {
-                window.location.href = 'index.html';
-            }, 2000);
         });
+    }
 
-        function showMessage(type, text) {
-            const messageDiv = document.getElementById('message');
-            messageDiv.className = `message ${type}`;
-            messageDiv.innerHTML = `<i class="fas ${type === 'success' ? 'fa-check-circle' : 'fa-exclamation-circle'}"></i> ${text}`;
-            messageDiv.style.display = 'flex';
-            
-            // اسکرول به بالا
-            window.scrollTo({
-                top: 0,
-                behavior: 'smooth'
-            });
-        }
-    </script>
+    // لینک فراموشی رمز
+    document.getElementById('forgotPassword').addEventListener('click', function(e) {
+        e.preventDefault();
+        alert('برای بازیابی رمز عبور با پشتیبانی تماس بگیرید: 09123456789');
+    });
+</script>
 </body>
+
 </html>
