@@ -8,289 +8,14 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     
     <style>
-        /* ===== همه استایل‌ها مثل قبل ===== */
+        /* همه استایل‌های قبلی اینجا */
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
             font-family: 'Vazirmatn', sans-serif;
         }
-
-        body {
-            min-height: 100vh;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            padding: 20px;
-        }
-
-        .login-container {
-            background: rgba(255, 255, 255, 0.98);
-            backdrop-filter: blur(10px);
-            width: 100%;
-            max-width: 480px;
-            border-radius: 32px;
-            padding: 45px 40px;
-            box-shadow: 0 30px 60px rgba(0, 0, 0, 0.3);
-            animation: slideUp 0.6s ease;
-            border: 1px solid rgba(255, 255, 255, 0.2);
-        }
-
-        @keyframes slideUp {
-            from {
-                opacity: 0;
-                transform: translateY(40px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        .header-icon {
-            width: 90px;
-            height: 90px;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin: 0 auto 25px;
-            box-shadow: 0 15px 30px rgba(102, 126, 234, 0.4);
-        }
-
-        .header-icon i {
-            font-size: 45px;
-            color: white;
-        }
-
-        h2 {
-            text-align: center;
-            color: #333;
-            margin-bottom: 10px;
-            font-size: 32px;
-            font-weight: 700;
-        }
-
-        .subtitle {
-            text-align: center;
-            color: #666;
-            margin-bottom: 35px;
-            font-size: 15px;
-        }
-
-        .input-group {
-            margin-bottom: 25px;
-        }
-
-        .input-group label {
-            display: block;
-            margin-bottom: 8px;
-            color: #555;
-            font-weight: 500;
-            font-size: 14px;
-        }
-
-        .input-group label i {
-            margin-left: 5px;
-            color: #667eea;
-        }
-
-        .input-wrapper {
-            position: relative;
-            display: flex;
-            align-items: center;
-        }
-
-        .input-wrapper i.input-icon {
-            position: absolute;
-            right: 15px;
-            color: #999;
-            font-size: 18px;
-            z-index: 1;
-        }
-
-        .input-wrapper input {
-            width: 100%;
-            padding: 16px 50px 16px 50px;
-            border: 2px solid #e1e1e1;
-            border-radius: 16px;
-            font-size: 15px;
-            transition: all 0.3s ease;
-            background: white;
-        }
-
-        .input-wrapper input:focus {
-            outline: none;
-            border-color: #667eea;
-            box-shadow: 0 0 0 4px rgba(102, 126, 234, 0.1);
-        }
-
-        .toggle-password {
-            position: absolute;
-            left: 12px;
-            background: none;
-            border: none;
-            cursor: pointer;
-            padding: 10px;
-            color: #999;
-            font-size: 20px;
-            border-radius: 50%;
-            width: 45px;
-            height: 45px;
-            z-index: 1;
-        }
-
-        .toggle-password:hover {
-            background-color: rgba(102, 126, 234, 0.1);
-            color: #667eea;
-        }
-
-        .message {
-            padding: 15px 20px;
-            border-radius: 14px;
-            margin-bottom: 20px;
-            font-size: 14px;
-            display: none;
-            align-items: center;
-            gap: 10px;
-        }
-
-        .message.success {
-            background: #d4edda;
-            color: #155724;
-            border: 1px solid #c3e6cb;
-        }
-
-        .message.error {
-            background: #f8d7da;
-            color: #721c24;
-            border: 1px solid #f5c6cb;
-        }
-
-        .remember-forgot {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin: 20px 0 25px;
-        }
-
-        .remember {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            color: #555;
-            font-size: 14px;
-            cursor: pointer;
-        }
-
-        .remember input[type="checkbox"] {
-            width: 18px;
-            height: 18px;
-            accent-color: #667eea;
-        }
-
-        .forgot-link {
-            color: #667eea;
-            text-decoration: none;
-            font-size: 14px;
-            display: flex;
-            align-items: center;
-            gap: 5px;
-        }
-
-        .forgot-link:hover {
-            color: #764ba2;
-        }
-
-        .login-btn {
-            width: 100%;
-            padding: 16px;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
-            border: none;
-            border-radius: 16px;
-            font-size: 17px;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            box-shadow: 0 10px 25px rgba(102, 126, 234, 0.4);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 10px;
-        }
-
-        .login-btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 15px 30px rgba(102, 126, 234, 0.5);
-        }
-
-        .register-link {
-            text-align: center;
-            margin-top: 25px;
-            color: #666;
-            font-size: 14px;
-        }
-
-        .register-link a {
-            color: #667eea;
-            text-decoration: none;
-            font-weight: 600;
-            margin-right: 5px;
-            display: inline-flex;
-            align-items: center;
-            gap: 5px;
-        }
-
-        .register-link a:hover {
-            color: #764ba2;
-        }
-
-        .direct-link {
-            text-align: center;
-            margin-top: 15px;
-            padding-top: 15px;
-            border-top: 1px solid #eee;
-        }
-        
-        .direct-link a {
-            color: #667eea;
-            text-decoration: none;
-            font-size: 14px;
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-            padding: 10px 20px;
-            border-radius: 25px;
-            background: rgba(102, 126, 234, 0.1);
-            transition: all 0.3s ease;
-        }
-        
-        .direct-link a:hover {
-            background: rgba(102, 126, 234, 0.2);
-            transform: translateX(-5px);
-        }
-
-        @media (max-width: 768px) {
-            .login-container {
-                padding: 30px 20px;
-            }
-            
-            h2 {
-                font-size: 28px;
-            }
-            
-            .header-icon {
-                width: 70px;
-                height: 70px;
-            }
-            
-            .header-icon i {
-                font-size: 35px;
-            }
-        }
+        /* ... بقیه استایل‌ها ... */
     </style>
 </head>
 <body>
@@ -348,19 +73,13 @@
                     <i class="fas fa-user-plus"></i>
                 </a>
             </div>
-            
-            <!-- لینک مستقیم به سایت شخصی -->
-            <div class="direct-link">
-                <a href="https://your-personal-site.com" target="_blank" id="personalSiteLink">
-                    <i class="fas fa-globe"></i>
-                    ورود به سایت شخصی من
-                    <i class="fas fa-arrow-left"></i>
-                </a>
-            </div>
         </form>
     </div>
 
+    <!-- ========== اینجا کد جاوااسکریپت رو قرار بده ========== -->
     <script>
+        // ===== سیستم ثبت‌نام و ورود با localStorage =====
+        
         // نمایش/مخفی کردن رمز عبور
         document.getElementById('togglePassword').addEventListener('click', function() {
             const passwordInput = document.getElementById('password');
@@ -375,15 +94,56 @@
             }
         });
 
-        // فرم ورود - با این کد می‌ره به سایت شخصی تو
+        // تابع برای ثبت‌نام کاربر جدید
+        function registerUser(username, password) {
+            // گرفتن لیست کاربران از localStorage
+            let users = JSON.parse(localStorage.getItem('users')) || [];
+            
+            // بررسی کن که کاربر قبلاً ثبت‌نام نکرده باشه
+            const userExists = users.some(user => user.username === username);
+            
+            if (userExists) {
+                return { success: false, message: 'این نام کاربری قبلاً ثبت‌نام کرده!' };
+            }
+            
+            // اضافه کردن کاربر جدید
+            users.push({ username, password });
+            localStorage.setItem('users', JSON.stringify(users));
+            return { success: true, message: 'ثبت‌نام با موفقیت انجام شد!' };
+        }
+
+        // تابع برای ورود کاربر
+        function loginUser(username, password) {
+            let users = JSON.parse(localStorage.getItem('users')) || [];
+            
+            // اگه هیچ کاربری ثبت‌نام نکرده، یه کاربر پیش‌فرض بساز
+            if (users.length === 0) {
+                users = [
+                    { username: 'ali88zare', password: '123456' },
+                    { username: 'admin', password: 'admin123' }
+                ];
+                localStorage.setItem('users', JSON.stringify(users));
+            }
+            
+            // بررسی کن کاربر وجود داره
+            const user = users.find(user => user.username === username && user.password === password);
+            
+            if (user) {
+                return { success: true, message: 'ورود موفق!' };
+            } else {
+                return { success: false, message: 'نام کاربری یا رمز عبور اشتباه است!' };
+            }
+        }
+
+        // مدیریت فرم ورود
         document.getElementById('loginForm').addEventListener('submit', function(e) {
-            e.preventDefault(); // از رفرش شدن صفحه جلوگیری می‌کنه
+            e.preventDefault();
             
             const username = document.getElementById('username').value;
             const password = document.getElementById('password').value;
             const messageDiv = document.getElementById('message');
             
-            // بررسی کن که فیلدها خالی نباشن
+            // بررسی کن فیلدها خالی نباشن
             if (username.trim() === '' || password.trim() === '') {
                 messageDiv.className = 'message error';
                 messageDiv.innerHTML = '<i class="fas fa-exclamation-circle"></i> لطفاً نام کاربری و رمز عبور را وارد کنید';
@@ -391,24 +151,35 @@
                 return;
             }
             
-            // پیام موفقیت
-            messageDiv.className = 'message success';
-            messageDiv.innerHTML = '<i class="fas fa-check-circle"></i> در حال انتقال به سایت شخصی...';
-            messageDiv.style.display = 'flex';
+            // تلاش برای ورود
+            const result = loginUser(username, password);
             
-            // اینجا آدرس سایت شخصی خودتو بذار
-            // بعد از 1 ثانیه می‌ره به سایتت
-            setTimeout(function() {
-                window.location.href = 'doshbord.html'; // <-- اینو عوض کن
-            }, 1000);
+            if (result.success) {
+                messageDiv.className = 'message success';
+                messageDiv.innerHTML = '<i class="fas fa-check-circle"></i> ' + result.message + ' در حال انتقال...';
+                messageDiv.style.display = 'flex';
+                
+                // ذخیره کن که کاربر وارد شده
+                localStorage.setItem('currentUser', username);
+                
+                // بعد از 1 ثانیه برو به سایت شخصی
+                setTimeout(function() {
+                    window.location.href = 'https://your-personal-site.com'; // آدرس سایت خودتو بذار
+                }, 1000);
+            } else {
+                messageDiv.className = 'message error';
+                messageDiv.innerHTML = '<i class="fas fa-exclamation-circle"></i> ' + result.message;
+                messageDiv.style.display = 'flex';
+            }
         });
 
         // لینک فراموشی رمز
         document.getElementById('forgotPassword').addEventListener('click', function(e) {
             e.preventDefault();
-            // اگه خواستی می‌تونی اینو هم به سایت شخصی لینک کنی
-            window.location.href = 'https://your-personal-site.com/forgot-password';
+            alert('برای بازیابی رمز عبور با پشتیبانی تماس بگیرید: 09123456789');
         });
     </script>
+    <!-- ========== پایان کد جاوااسکریپت ========== -->
+
 </body>
 </html>
