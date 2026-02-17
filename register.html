@@ -1,4 +1,3 @@
-<!-- فایل: register.html -->
 <!DOCTYPE html>
 <html lang="fa" dir="rtl">
 <head>
@@ -7,10 +6,303 @@
     <title>ثبت نام در سایت</title>
     <link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-    <link rel="stylesheet" href="assets/css/style.css">
+    
+    <style>
+        /* ===== همه استایل‌ها مثل فرم لاگین ===== */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Vazirmatn', sans-serif;
+        }
+
+        body {
+            min-height: 100vh;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .login-container {
+            background: rgba(255, 255, 255, 0.98);
+            backdrop-filter: blur(10px);
+            width: 100%;
+            max-width: 500px;
+            border-radius: 32px;
+            padding: 45px 40px;
+            box-shadow: 0 30px 60px rgba(0, 0, 0, 0.3);
+            animation: slideUp 0.6s ease;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        @keyframes slideUp {
+            from {
+                opacity: 0;
+                transform: translateY(40px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .header-icon {
+            width: 90px;
+            height: 90px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 25px;
+            box-shadow: 0 15px 30px rgba(102, 126, 234, 0.4);
+        }
+
+        .header-icon i {
+            font-size: 45px;
+            color: white;
+        }
+
+        h2 {
+            text-align: center;
+            color: #333;
+            margin-bottom: 10px;
+            font-size: 32px;
+            font-weight: 700;
+        }
+
+        .subtitle {
+            text-align: center;
+            color: #666;
+            margin-bottom: 35px;
+            font-size: 15px;
+        }
+
+        .input-group {
+            margin-bottom: 20px;
+        }
+
+        .input-group label {
+            display: block;
+            margin-bottom: 8px;
+            color: #555;
+            font-weight: 500;
+            font-size: 14px;
+        }
+
+        .input-group label i {
+            margin-left: 5px;
+            color: #667eea;
+        }
+
+        .input-wrapper {
+            position: relative;
+            display: flex;
+            align-items: center;
+        }
+
+        .input-wrapper i.input-icon {
+            position: absolute;
+            right: 15px;
+            color: #999;
+            font-size: 18px;
+            z-index: 1;
+        }
+
+        .input-wrapper input {
+            width: 100%;
+            padding: 14px 50px 14px 50px;
+            border: 2px solid #e1e1e1;
+            border-radius: 14px;
+            font-size: 15px;
+            transition: all 0.3s ease;
+            background: white;
+        }
+
+        .input-wrapper input:focus {
+            outline: none;
+            border-color: #667eea;
+            box-shadow: 0 0 0 4px rgba(102, 126, 234, 0.1);
+        }
+
+        .input-wrapper input:focus + i.input-icon {
+            color: #667eea;
+        }
+
+        .toggle-password {
+            position: absolute;
+            left: 12px;
+            background: none;
+            border: none;
+            cursor: pointer;
+            padding: 10px;
+            color: #999;
+            font-size: 20px;
+            border-radius: 50%;
+            width: 45px;
+            height: 45px;
+            z-index: 1;
+        }
+
+        .toggle-password:hover {
+            background-color: rgba(102, 126, 234, 0.1);
+            color: #667eea;
+        }
+
+        /* نوار قدرت رمز */
+        .password-strength {
+            height: 5px;
+            background: #e1e1e1;
+            border-radius: 10px;
+            margin-top: 8px;
+            overflow: hidden;
+        }
+
+        .strength-bar {
+            height: 100%;
+            width: 0;
+            transition: width 0.4s ease;
+            border-radius: 10px;
+        }
+
+        /* پیام تطابق رمز */
+        .password-match {
+            font-size: 12px;
+            margin-top: 5px;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .password-match.match {
+            color: #00C851;
+        }
+
+        .password-match.not-match {
+            color: #ff4444;
+        }
+
+        .message {
+            padding: 15px 20px;
+            border-radius: 14px;
+            margin: 20px 0;
+            font-size: 14px;
+            display: none;
+        }
+
+        .message.success {
+            background: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+        }
+
+        .message.error {
+            background: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+        }
+
+        /* قوانین */
+        .terms {
+            margin: 20px 0;
+        }
+
+        .checkbox-label {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            cursor: pointer;
+            font-size: 14px;
+            color: #555;
+        }
+
+        .checkbox-label input[type="checkbox"] {
+            width: 18px;
+            height: 18px;
+            accent-color: #667eea;
+        }
+
+        .terms-text a {
+            color: #667eea;
+            text-decoration: none;
+        }
+
+        .terms-text a:hover {
+            text-decoration: underline;
+        }
+
+        .register-btn {
+            width: 100%;
+            padding: 16px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            border-radius: 16px;
+            font-size: 17px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 10px 25px rgba(102, 126, 234, 0.4);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+
+        .register-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 15px 30px rgba(102, 126, 234, 0.5);
+        }
+
+        .register-btn i {
+            font-size: 18px;
+        }
+
+        .login-link {
+            text-align: center;
+            margin-top: 25px;
+            color: #666;
+            font-size: 14px;
+        }
+
+        .login-link a {
+            color: #667eea;
+            text-decoration: none;
+            font-weight: 600;
+            margin-right: 5px;
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .login-link a:hover {
+            color: #764ba2;
+        }
+
+        @media (max-width: 768px) {
+            .login-container {
+                padding: 30px 20px;
+            }
+            
+            h2 {
+                font-size: 28px;
+            }
+            
+            .header-icon {
+                width: 70px;
+                height: 70px;
+            }
+            
+            .header-icon i {
+                font-size: 35px;
+            }
+        }
+    </style>
 </head>
 <body>
-    <div class="login-container register-container">
+    <div class="login-container">
         <div class="header-icon">
             <i class="fas fa-user-plus"></i>
         </div>
@@ -19,37 +311,40 @@
         <p class="subtitle">برای ایجاد حساب کاربری، اطلاعات زیر را وارد کنید</p>
 
         <form id="registerForm">
+            <!-- نام و نام خانوادگی -->
             <div class="input-group">
                 <label><i class="fas fa-user"></i> نام و نام خانوادگی</label>
                 <div class="input-wrapper">
                     <i class="fas fa-user input-icon"></i>
-                    <input type="text" id="fullname" name="fullname" placeholder="مثال: علی محمدی" required>
+                    <input type="text" id="fullname" placeholder="مثال: علی محمدی" required>
                 </div>
             </div>
 
+            <!-- نام کاربری -->
             <div class="input-group">
                 <label><i class="fas fa-user-circle"></i> نام کاربری</label>
                 <div class="input-wrapper">
                     <i class="fas fa-at input-icon"></i>
-                    <input type="text" id="username" name="username" placeholder="example123" required>
+                    <input type="text" id="username" placeholder="example123" required>
                 </div>
-                <small class="input-hint">حداقل 3 کاراکتر، فقط حروف و اعداد</small>
             </div>
 
+            <!-- ایمیل -->
             <div class="input-group">
                 <label><i class="fas fa-envelope"></i> ایمیل</label>
                 <div class="input-wrapper">
                     <i class="fas fa-envelope input-icon"></i>
-                    <input type="email" id="email" name="email" placeholder="example@email.com" required>
+                    <input type="email" id="email" placeholder="example@email.com" required>
                 </div>
             </div>
 
+            <!-- رمز عبور -->
             <div class="input-group">
                 <label><i class="fas fa-lock"></i> رمز عبور</label>
                 <div class="input-wrapper">
                     <i class="fas fa-key input-icon"></i>
-                    <input type="password" id="password" name="password" placeholder="حداقل 6 کاراکتر" required>
-                    <button type="button" class="toggle-password" data-target="password">
+                    <input type="password" id="password" placeholder="حداقل ۶ کاراکتر" required>
+                    <button type="button" class="toggle-password" id="togglePassword">
                         <i class="fas fa-eye"></i>
                     </button>
                 </div>
@@ -58,12 +353,13 @@
                 </div>
             </div>
 
+            <!-- تکرار رمز عبور -->
             <div class="input-group">
                 <label><i class="fas fa-lock"></i> تکرار رمز عبور</label>
                 <div class="input-wrapper">
                     <i class="fas fa-key input-icon"></i>
-                    <input type="password" id="confirm_password" name="confirm_password" placeholder="رمز عبور را مجدد وارد کنید" required>
-                    <button type="button" class="toggle-password" data-target="confirm_password">
+                    <input type="password" id="confirm_password" placeholder="رمز عبور را مجدد وارد کنید" required>
+                    <button type="button" class="toggle-password" id="toggleConfirmPassword">
                         <i class="fas fa-eye"></i>
                     </button>
                 </div>
@@ -71,22 +367,26 @@
             </div>
 
             <!-- پیام خطا/موفقیت -->
-            <div id="message" class="message" style="display: none;"></div>
+            <div id="message" class="message"></div>
 
+            <!-- قوانین -->
             <div class="terms">
                 <label class="checkbox-label">
-                    <input type="checkbox" name="terms" id="terms" required>
-                    <span class="checkmark"></span>
-                    <span class="terms-text"> <a href="#">قوانین و مقررات</a> را می‌پذیرم</span>
+                    <input type="checkbox" id="terms" required>
+                    <span class="terms-text">
+                        <a href="#">قوانین و مقررات</a> را می‌پذیرم
+                    </span>
                 </label>
             </div>
 
-            <button type="submit" class="login-btn" id="registerBtn">
+            <!-- دکمه ثبت نام -->
+            <button type="submit" class="register-btn" id="registerBtn">
                 <span>ثبت نام</span>
                 <i class="fas fa-user-check"></i>
             </button>
 
-            <div class="register-link">
+            <!-- لینک ورود -->
+            <div class="login-link">
                 قبلاً ثبت نام کرده‌اید؟
                 <a href="index.html">
                     وارد شوید 
@@ -96,10 +396,124 @@
         </form>
     </div>
 
-    <div id="loadingSpinner" class="loading-spinner" style="display: none;">
-        <div class="spinner"></div>
-    </div>
+    <script>
+        // نمایش/مخفی کردن رمز عبور
+        document.getElementById('togglePassword').addEventListener('click', function() {
+            const passwordInput = document.getElementById('password');
+            const icon = this.querySelector('i');
+            
+            if (passwordInput.type === 'password') {
+                passwordInput.type = 'text';
+                icon.className = 'fas fa-eye-slash';
+            } else {
+                passwordInput.type = 'password';
+                icon.className = 'fas fa-eye';
+            }
+        });
 
-    <script src="assets/js/register.js"></script>
+        document.getElementById('toggleConfirmPassword').addEventListener('click', function() {
+            const confirmInput = document.getElementById('confirm_password');
+            const icon = this.querySelector('i');
+            
+            if (confirmInput.type === 'password') {
+                confirmInput.type = 'text';
+                icon.className = 'fas fa-eye-slash';
+            } else {
+                confirmInput.type = 'password';
+                icon.className = 'fas fa-eye';
+            }
+        });
+
+        // نمایش قدرت رمز عبور
+        document.getElementById('password').addEventListener('input', function() {
+            const password = this.value;
+            const strengthBar = document.getElementById('strengthBar');
+            let strength = 0;
+            
+            if (password.length >= 8) strength += 30;
+            else if (password.length >= 6) strength += 20;
+            else strength += 10;
+            
+            if (/[a-z]/.test(password)) strength += 20;
+            if (/[A-Z]/.test(password)) strength += 20;
+            if (/[0-9]/.test(password)) strength += 15;
+            if (/[^a-zA-Z0-9]/.test(password)) strength += 15;
+            
+            strength = Math.min(strength, 100);
+            strengthBar.style.width = strength + '%';
+            
+            if (strength < 30) {
+                strengthBar.style.background = '#ff4444';
+            } else if (strength < 60) {
+                strengthBar.style.background = '#ffbb33';
+            } else {
+                strengthBar.style.background = '#00C851';
+            }
+            
+            checkPasswordMatch();
+        });
+
+        // بررسی تطابق رمز
+        document.getElementById('confirm_password').addEventListener('input', checkPasswordMatch);
+
+        function checkPasswordMatch() {
+            const password = document.getElementById('password').value;
+            const confirm = document.getElementById('confirm_password').value;
+            const matchDiv = document.getElementById('passwordMatch');
+            
+            if (confirm.length > 0) {
+                if (password === confirm) {
+                    matchDiv.className = 'password-match match';
+                    matchDiv.innerHTML = '<i class="fas fa-check-circle"></i> رمز عبور مطابقت دارد';
+                } else {
+                    matchDiv.className = 'password-match not-match';
+                    matchDiv.innerHTML = '<i class="fas fa-times-circle"></i> رمز عبور مطابقت ندارد';
+                }
+            } else {
+                matchDiv.innerHTML = '';
+            }
+        }
+
+        // ارسال فرم
+        document.getElementById('registerForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            // بررسی تطابق رمز
+            const password = document.getElementById('password').value;
+            const confirm = document.getElementById('confirm_password').value;
+            
+            if (password !== confirm) {
+                showMessage('error', 'رمز عبور و تکرار آن مطابقت ندارند!');
+                return;
+            }
+            
+            // بررسی تیک قوانین
+            if (!document.getElementById('terms').checked) {
+                showMessage('error', 'برای ثبت نام باید قوانین را بپذیرید');
+                return;
+            }
+            
+            // نمایش پیام موفقیت
+            showMessage('success', 'ثبت نام با موفقیت انجام شد! به صفحه ورود هدایت می‌شوید...');
+            
+            // رفتن به صفحه لاگین بعد از ۲ ثانیه
+            setTimeout(() => {
+                window.location.href = 'index.html';
+            }, 2000);
+        });
+
+        function showMessage(type, text) {
+            const messageDiv = document.getElementById('message');
+            messageDiv.className = `message ${type}`;
+            messageDiv.innerHTML = `<i class="fas ${type === 'success' ? 'fa-check-circle' : 'fa-exclamation-circle'}"></i> ${text}`;
+            messageDiv.style.display = 'flex';
+            
+            // اسکرول به بالا
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            });
+        }
+    </script>
 </body>
 </html>
