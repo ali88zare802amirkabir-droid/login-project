@@ -1,0 +1,105 @@
+<!-- فایل: register.html -->
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ثبت نام در سایت</title>
+    <link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" href="assets/css/style.css">
+</head>
+<body>
+    <div class="login-container register-container">
+        <div class="header-icon">
+            <i class="fas fa-user-plus"></i>
+        </div>
+
+        <h2>عضویت در سایت ✨</h2>
+        <p class="subtitle">برای ایجاد حساب کاربری، اطلاعات زیر را وارد کنید</p>
+
+        <form id="registerForm">
+            <div class="input-group">
+                <label><i class="fas fa-user"></i> نام و نام خانوادگی</label>
+                <div class="input-wrapper">
+                    <i class="fas fa-user input-icon"></i>
+                    <input type="text" id="fullname" name="fullname" placeholder="مثال: علی محمدی" required>
+                </div>
+            </div>
+
+            <div class="input-group">
+                <label><i class="fas fa-user-circle"></i> نام کاربری</label>
+                <div class="input-wrapper">
+                    <i class="fas fa-at input-icon"></i>
+                    <input type="text" id="username" name="username" placeholder="example123" required>
+                </div>
+                <small class="input-hint">حداقل 3 کاراکتر، فقط حروف و اعداد</small>
+            </div>
+
+            <div class="input-group">
+                <label><i class="fas fa-envelope"></i> ایمیل</label>
+                <div class="input-wrapper">
+                    <i class="fas fa-envelope input-icon"></i>
+                    <input type="email" id="email" name="email" placeholder="example@email.com" required>
+                </div>
+            </div>
+
+            <div class="input-group">
+                <label><i class="fas fa-lock"></i> رمز عبور</label>
+                <div class="input-wrapper">
+                    <i class="fas fa-key input-icon"></i>
+                    <input type="password" id="password" name="password" placeholder="حداقل 6 کاراکتر" required>
+                    <button type="button" class="toggle-password" data-target="password">
+                        <i class="fas fa-eye"></i>
+                    </button>
+                </div>
+                <div class="password-strength">
+                    <div class="strength-bar" id="strengthBar"></div>
+                </div>
+            </div>
+
+            <div class="input-group">
+                <label><i class="fas fa-lock"></i> تکرار رمز عبور</label>
+                <div class="input-wrapper">
+                    <i class="fas fa-key input-icon"></i>
+                    <input type="password" id="confirm_password" name="confirm_password" placeholder="رمز عبور را مجدد وارد کنید" required>
+                    <button type="button" class="toggle-password" data-target="confirm_password">
+                        <i class="fas fa-eye"></i>
+                    </button>
+                </div>
+                <div id="passwordMatch" class="password-match"></div>
+            </div>
+
+            <!-- پیام خطا/موفقیت -->
+            <div id="message" class="message" style="display: none;"></div>
+
+            <div class="terms">
+                <label class="checkbox-label">
+                    <input type="checkbox" name="terms" id="terms" required>
+                    <span class="checkmark"></span>
+                    <span class="terms-text"> <a href="#">قوانین و مقررات</a> را می‌پذیرم</span>
+                </label>
+            </div>
+
+            <button type="submit" class="login-btn" id="registerBtn">
+                <span>ثبت نام</span>
+                <i class="fas fa-user-check"></i>
+            </button>
+
+            <div class="register-link">
+                قبلاً ثبت نام کرده‌اید؟
+                <a href="index.html">
+                    وارد شوید 
+                    <i class="fas fa-sign-in-alt"></i>
+                </a>
+            </div>
+        </form>
+    </div>
+
+    <div id="loadingSpinner" class="loading-spinner" style="display: none;">
+        <div class="spinner"></div>
+    </div>
+
+    <script src="assets/js/register.js"></script>
+</body>
+</html>
